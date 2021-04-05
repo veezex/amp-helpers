@@ -54,20 +54,21 @@
           "allow-scripts allow-popups allow-forms allow-same-origin";
         iframe.horizontalScrolling = "no";
         iframe.verticalScrolling = "no";
+        iframe.onload = function() {
+            iFrameResize(
+              {
+                log: false,
+                heightCalculationMethod: "documentElementScroll",
+                resizedCallback: function (messageData) {
+                  console.log(messageData);
+                  setParentHeight(messageData.height);
+                },
+              },
+              "#iframe iframe"
+            );
+        }
 
         container.appendChild(iframe);
-
-        iFrameResize(
-          {
-            log: false,
-            heightCalculationMethod: "documentElementScroll",
-            resizedCallback: function (messageData) {
-              console.log(messageData);
-              setParentHeight(messageData.height);
-            },
-          },
-          "#iframe iframe"
-        );
       })();
     </script>
   </body>
